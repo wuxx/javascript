@@ -1,0 +1,99 @@
+<html>
+ <head>
+  <script type="text/javascript">
+		var r1 = 1;
+		var r2 = 1;
+		var r3 = 1;
+		var r4 = 1;
+		var r5 = 1;
+
+function draw() {
+              var ctx = document.getElementById("canvas").getContext('2d');
+              
+              // 画渐变背景设置渐变样式
+              var g1 = ctx.createRadialGradient(200,200,0,200,200,200);
+                    g1.addColorStop(0,'rgb(255,255,255)');
+                  g1.addColorStop(1,'rgb(220,220,220)');
+                  ctx.fillStyle =  g1;
+                  ctx.fillRect(0,0,400,400);
+                  
+             // 中心点移动到(200,200) 
+             ctx.translate(200,200);
+//	  	ctx.clearRect(0,0,canvas.width,canvas.height);
+//		draw_ball(ctx);
+//	  	ctx.clearRect(-200,-200,canvas.width,canvas.height);
+		setInterval(function (){rotate(ctx)}, 50);
+}
+
+function rotate(ctx) {
+
+//	  	ctx.clearRect(-100,-100,canvas.width/2,canvas.height/2);
+//	  	ctx.clearRect(-200,-200,canvas.width,canvas.height);
+            var g1 = ctx.createRadialGradient(0,0,0,0,0,100);
+                g1.addColorStop(0,'rgba(255,255,255, 0.1)');
+//                g1.addColorStop(1,'rgba(240,255,255, 0.3)');
+                g1.addColorStop(1,'rgba(8,46,84, 0.2)');
+//                    g1.addColorStop(0,'rgb(255,255,255)');//设为rgba之后，出现了辉光，为啥，漂亮。辉光是由透明度控制的。
+//                  g1.addColorStop(1,'rgb(220,220,220)');
+
+                ctx.fillStyle =  g1;
+                ctx.fillRect(-200,-200,canvas.width,canvas.height);
+
+
+		ctx.save();
+		ctx.rotate(-r1*Math.PI/180);
+		r1++;
+		draw_ball(ctx,1);		
+		ctx.restore();
+
+		ctx.save();
+		ctx.rotate(r2*Math.PI/180);
+		r2++;
+		draw_ball(ctx,2);		
+		ctx.restore();
+
+		ctx.save();
+		ctx.rotate(-r3*Math.PI/180);
+		r3++;
+		draw_ball(ctx,3);		
+		ctx.restore();
+
+		ctx.save();
+		ctx.rotate(r4*Math.PI/180);
+		r4++;
+		draw_ball(ctx,4);		
+		ctx.restore();
+
+		ctx.save();
+		ctx.rotate(-r5*Math.PI/180);
+		r5++;
+		draw_ball(ctx,5);		
+		ctx.restore();
+
+}
+function draw_ball(ctx,r) {//在距离原点r处画一个球环..环中有2*r个球
+
+                  
+                
+                // 设置当前填充颜色
+                ctx.fillStyle = 'rgb('+(51*r)+','+(255-51*r)+',255)';
+            
+                for (var j=0;j<r*6;j++)//一个环中的球个数
+                { 
+                      // 坐标轴旋转
+                      ctx.rotate(Math.PI*2/(r*6));//i*6是一个环中球的个数
+                      
+                      // 画圆
+                      ctx.beginPath();
+                      ctx.arc(0,r*30,8,0,Math.PI*2,true);//以0,i*30为环心,半径为8,从0~pi/2,顺时针
+                      ctx.fill();//with the fillStyle at now.
+                }
+                
+}
+
+  </script>
+ </head>
+ <body onload="draw()">
+   <canvas id="canvas" width="400" height="400"></canvas>
+ </body>
+</html>
